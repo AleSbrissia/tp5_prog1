@@ -136,20 +136,15 @@ int set_contains (struct set_t *s1, struct set_t *s2) {
 int set_equal (struct set_t *s1, struct set_t *s2) {
 
   int i ;
-  bool t ;
 
   if (!s1 || !s2 || !s1->flag || !s2->flag)
     return 0 ;
 
-  t = true ;
-  for ( i = 0 ; i < s1->size && i < s2->size && t ; i++)
-    if ( s1->flag[i] != s2->flag[i] ) 
-      t = false ;
+  for (i = 0 ; i < s1->size && i < s2->size ; i++)
+    if (s1->flag[i] != s2->flag[i])
+      return 0 ;
 
-  if (t)  
-    return 1 ;
-
-  return 0 ;
+  return 1 ;
 }
 
 // Puts in s3 the union of sets s1 and s2; s3 previous content
@@ -218,7 +213,12 @@ int set_diff (struct set_t *s1, struct set_t *s2, struct set_t *s3) {
 int set_copy (struct set_t *s1, struct set_t *s2) {
 
   int i ;
-
+  
+  if (!s1 || !s2 || !s3)
+    return 0 ;
+  if (!s1->flag || !s2->flag || !s3->flag)
+    return 0 ;
+  
   for (i = 0 ; i < s1->size ; i++) 
     if (s1->flag[i]) {
 
@@ -242,11 +242,9 @@ void set_print (struct set_t *s) {
     return ;
 
   printf("[ ") ;
-
   for ( i = 0 ; i < s->size ; i++) 
     if (s->flag[i] == 1) 
       printf("%d ", i) ;
-
   printf("]\n") ; 
 }
 
