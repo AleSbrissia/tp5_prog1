@@ -47,9 +47,12 @@ struct set_t *set_destroy (struct set_t *s) {
 // Return: 1 if success or 0 if failure
 int set_add (struct set_t *s, int item) {
 
-  if (!s)
+  if (!s || !s->flag)
     return 0 ;
 
+  if (item >= s->size) 
+    return 0 ;
+   
   s->flag[item] = 1 ;
   s->num++ ;
 
