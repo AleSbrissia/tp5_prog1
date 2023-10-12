@@ -244,7 +244,7 @@ void set_print (struct set_t *s) {
 
   int i ;
 
-  if (!s)
+  if (!s || !s->flag)
     return ;
 
   printf("[ ") ;
