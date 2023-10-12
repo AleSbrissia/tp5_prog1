@@ -65,6 +65,9 @@ int set_del (struct set_t *s, int item) {
 
   if (!s || !s->flag) 
     return 0 ; 
+  
+  if (item >= s->size)
+    return 0 ;
 
   s->flag[item] = 0 ;
   s->num-- ;
@@ -76,9 +79,8 @@ int set_del (struct set_t *s, int item) {
 // Return: 1 if success or 0 if failure
 int set_in (struct set_t *s, int item) { 
 
-  if (!s) 
+  if (!s || !s->flag) 
     return 0 ;
-
   if (s->flag[item])
     return 1 ;
 
@@ -89,7 +91,7 @@ int set_in (struct set_t *s, int item) {
 // Return: 1 if success or 0 if failure
 int set_empty (struct set_t *s) { 
 
-  if (!s) 
+  if (!s || !s->flag) 
     return 0 ; 
 
   if (s->num == 0)
@@ -102,7 +104,7 @@ int set_empty (struct set_t *s) {
 // Return: n >=0 if success or -1 if failure
 int set_card (struct set_t *s) {
 
-  if (!s)
+  if (!s || !s->flag)
     return -1 ;
 
   return s->num ;
@@ -115,8 +117,10 @@ int set_contains (struct set_t *s1, struct set_t *s2) {
   int i ;
   bool t ;
 
-  t = true ;
+  if (!s1 || !s1->flag || !s2 || !s2->flag)
+    return 0 ;
   
+  t = true ;
   for (i = 0 ; i < s2->size && t; i++)
     if (!s1->flag[i] && s2->flag[i]) 
       t = false ;
@@ -138,7 +142,6 @@ int set_equal (struct set_t *s1, struct set_t *s2) {
     return 0 ;
 
   t = true ;
-
   for ( i = 0 ; i < s1->size && i < s2->size && t ; i++)
     if ( s1->flag[i] != s2->flag[i] ) 
       t = false ;
