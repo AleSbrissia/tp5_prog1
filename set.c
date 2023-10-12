@@ -69,8 +69,11 @@ int set_del (struct set_t *s, int item) {
   if (item >= s->size)
     return 0 ;
 
-  s->flag[item] = 0 ;
-  s->num-- ;
+  if (s->flag[item] == 1) {
+
+    s->flag[item] = 0 ;
+    s->num-- ;
+  }
 
   return 1 ;
 }
@@ -251,7 +254,9 @@ void set_print (struct set_t *s) {
   for ( i = 0 ; i < s->size ; i++) 
     if (s->flag[i] == 1) 
       printf("%d ", i) ;
-  printf("]\n") ; 
+  printf("] ") ;
+  
+  printf("(%d items)\n", s->num) ;
 }
 
 
