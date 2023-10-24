@@ -225,7 +225,7 @@ int set_copy (struct set_t *s1, struct set_t *s2) {
   
   if (!s1 || !s2 || !s3)
     return 0 ;
-  if (!s1->flag || !s2->flag || !s3->flag)
+  if (!s1->flag || !s2->flag)
     return 0 ;
   
   for (i = 0 ; i < s1->size ; i++) 
